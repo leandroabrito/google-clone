@@ -8,6 +8,7 @@
   <title>Welcome to Doodle</title>
 </head>
 <body>
+
   <div class="wrapper index-page">
     <div class="main-section"> 
 
