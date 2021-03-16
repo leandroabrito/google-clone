@@ -11,6 +11,14 @@
   <div class="main-section"> 
 
     <div class="logo-container">
+      <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="">
+    </div>
+
+    <div class="search-container">
+      <form action="search.php" method="GET">
+        <input class="search-box" type="text" name="term" placeholder="Enter a search term">
+        <input class="search-button" type="submit" value="Search">
+      </form>
 
     </div>
 
