@@ -1,14 +1,21 @@
 <?php 
 
-  include ("classes/DomDocumentParser.php");
+include ("classes/DomDocumentParser.php");
 
-  function followLinks($url) {
-    
-      $parser = new DomDocumentParser($url);
-  }
+function followLinks($url) {
+  
+    $parser = new DomDocumentParser($url);
 
-  $startUrl = "http://www.reecekenney.com";
+    $linkList = $parser->getLinks();
 
-  followLinks($startUrl);
+    foreach($linkList as $link) {
+      $href = $link->getAttribute("href");
+      echo $href . "<br>";
+    }
+}
+
+$startUrl = "http://www.reecekenney.com";
+
+followLinks($startUrl);
 
 ?>
