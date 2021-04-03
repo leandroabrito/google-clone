@@ -9,6 +9,20 @@ $alreadyCrawled = array();
 $crawling = array();
 
 
+function linkExists($url) {
+
+  global $conn;
+
+  $query = $conn->prepare("SELECT * FROM sites WHERE url = :url");
+
+  $query->bindParam(":url", $url);
+
+  $query->execute();
+
+  return $query->rowCount() != 0;
+
+}
+
 function insertLinkToDB($url, $title, $description, $keywords) {
 
   global $conn;
@@ -86,9 +100,21 @@ function getDetails($url) {
   $keywords = str_replace("\n", "", $keywords);
 
 
-  echo "URL: $url, Description: $description, Keywords: $keywords<br>";
+  // echo "URL: $url, Description: $description, Keywords: $keywords<br>";
 
-  insertLinkToDB($url, $title, $description, $keywords);
+  if(linkExists($url)) {
+    echo "$url already exists<br>";
+  } 
+
+  else if(insertLinkToDB($url, $title, $description, $keywords)) {
+    echo "SUCCESS: $url<br>";
+  }
+
+  else {
+    echo "ERROS: Failed to insert $url<br>";
+  }
+
+  ;
 
 }
 
