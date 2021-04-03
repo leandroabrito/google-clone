@@ -1,11 +1,28 @@
 <?php 
 
-include ("classes/DomDocumentParser.php");
+include("config.php");
+
+include("classes/DomDocumentParser.php");
 
 $alreadyCrawled = array();
 
 $crawling = array();
 
+
+function insertLinkToDB($url, $title, $description, $keywords) {
+
+  global $conn;
+
+  $query = $conn->prepare("INSERT INTO sites(url, title, description, keywords) VALUES(:url, :title, :description, :keywords)");
+
+  $query->bindParam(":url", $url);
+  $query->bindParam(":title", $title);
+  $query->bindParam(":description", $description);
+  $query->bindParam(":keywords", $keywords);
+
+  return $query->execute();
+
+}
 
 
 function createLink($src, $url) {   
@@ -71,6 +88,8 @@ function getDetails($url) {
 
   echo "URL: $url, Description: $description, Keywords: $keywords<br>";
 
+  insertLinkToDB($url, $title, $description, $keywords);
+
 }
 
 
@@ -115,7 +134,7 @@ function followLinks($url) {
 
 }
 
-$startUrl = "http://www.estrategiaconcursos.com.br";
+$startUrl = "http://www.bbc.com";
 
 followLinks($startUrl);
 
